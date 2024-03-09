@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   #server
   supervisor nginx tree\
   && pip install --upgrade pip \
-  && pip install --no-cache-dir -r requirements/production.txt
+  && pip install --no-cache-dir -r /app/requirements/production.txt
 
 # setup all the configfiles
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
