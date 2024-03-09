@@ -1,0 +1,34 @@
+name: Destroy created infra
+
+on:
+  workflow_dispatch:
+
+
+          
+jobs:
+  infra:
+    name: infra
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./infra
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::837081425917:role/tf-cicd
+          aws-region: eu-west-3
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.1.7"
+      - name: Terraform Init
+        id: init
+        run: terraform init -var-file="${{github.ref_name}}.tfvars" -backend-config "bucket=${{github.ref_name}}-devops-terraform-state"
+      - name: Terraform Destroy
+        id: destroy
+        run: terraform destroy -auto-approve -var-file="${{github.ref_name}}.tfvars"
