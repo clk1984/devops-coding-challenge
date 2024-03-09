@@ -12,8 +12,7 @@ name: Deploy devops interview app
 on:
   push:
     branches:
-      - main
-      - stg
+      - master
 
           
 jobs:
