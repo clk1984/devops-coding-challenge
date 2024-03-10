@@ -336,5 +336,3 @@ devops_interview_test/media/
 #.envs/*
 !.envs/.local/
 
-todo.md
-notes.md
